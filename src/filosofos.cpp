@@ -49,7 +49,6 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
 {
 
   while(R>0)
-<<<<<<< HEAD
     {    
       printf("oiee\n");
       /* Último filósofo - diferente dos outros */
