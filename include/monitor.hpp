@@ -1,31 +1,24 @@
+#ifndef MONITOR_HPP
+#define MONITOR_HPP
 #include <condition_variable>
-#include <string>
-
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <iostream>
-#include <iomanip>
-#include <vector>
 #include <thread>
+#include <mutex>
 
-#include <pthread.h>
-#include <semaphore.h>
-#include <unistd.h>
+using namespace std;
 
-typedef class monitor
+class Monitor
 {
-	std::condition_variable cv;
+  condition_variable cv;
+  mutex m;
 
+  void signal();
+
+  void wait(unique_lock<mutex>&);
+  
 public:
 
-	void signal(std::condition_variable cv);
+  void devolveGarfo();
 
-	void wait(std::condition_variable cv);
-
-
-
-	void devolveGarfo();
-
-	void requisitaGarfo();
-}Monitor;
+  void requisitaGarfo();
+};
+#endif
