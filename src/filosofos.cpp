@@ -1,5 +1,5 @@
 #define SHARED 1
-
+#define DEBUG 1
 
 #include "monitor.hpp"
 
@@ -7,6 +7,7 @@ using namespace std;
 
 void *filosofoUniforme(void *i);
 void *filosofoPesado(void *i);
+void read(char *file_name);
 
 vector<int> quantidade_comeu;
 vector<int> peso;
@@ -25,14 +26,14 @@ Monitor *garfo;
 
 int main(int argc, char *argv[])
 {
-    N = 3;
+    read(argv[1]);
     R = atoi(argv[2]);
     vector<int> thread_args;
+    printf("%d\n", N);
 
     /* Inicializando vetores / semáforo / barreira */
     thread_args.resize(N);
     threads.resize(N);
-    peso.resize(N);
     quantidade_comeu.resize(N);
     pthread_barrier_init(&barreira, NULL, N);
     pthread_barrier_init(&barreira2, NULL, N);
@@ -58,11 +59,13 @@ void *filosofoUniforme(void *i)
 
     while(R>0)
     {    
-        printf("oiee\n");
+        if(DEBUG) printf("entrou na thread \n");
         /* Último filósofo - diferente dos outros */
         if(num == N-1)
         {
+            if(DEBUG) printf(" método1\n");
             garfo[0].requisitaGarfo();
+            printf("lalalala\n");
             garfo[num].requisitaGarfo();
             //filósofo comendo
             garfo[0].devolveGarfo();
@@ -72,6 +75,7 @@ void *filosofoUniforme(void *i)
         // Demais filósofos
         else
         {
+            if(DEBUG) printf(" método2\n");
             garfo[num].requisitaGarfo();
             garfo[num+1].requisitaGarfo();
             //filósofo comendo
@@ -115,4 +119,38 @@ void *filosofoPesado(void *i)
         pthread_barrier_wait(&barreira2);
     }
     return NULL;
+}
+
+
+
+
+
+void read(char *file_name)
+{
+    char line[1000];
+    FILE *file;
+    int lineCount = 0;
+    file = fopen(file_name , "r");
+
+    while((fgets(line, sizeof(line), file)) != NULL)
+    {
+        if (lineCount == 0)
+        { /* First line contains number of vertex */
+            N = atoi(line);
+            peso.resize(N);
+            lineCount = 1;  
+        }
+
+        else
+        {
+            char space[2] = " ";
+            peso[0] = atoi(strtok(line, space));
+            for(int i = 1; i<N; i++)
+            {
+                peso[i] = atoi(strtok(NULL, space));
+            }
+            break;
+        }
+    }
+    fclose(file);
 }

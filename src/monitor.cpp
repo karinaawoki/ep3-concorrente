@@ -18,6 +18,9 @@ void Monitor::devolveGarfo()
 
 void Monitor::requisitaGarfo()
 {
+	printf("++++++++\n");
     unique_lock<mutex> lck(m);
     this->wait(lck);
+
+    printf("******\n");
 }
