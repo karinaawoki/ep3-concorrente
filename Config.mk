@@ -44,7 +44,7 @@
 # CPPFLAGS        := # Precompiler Flags
 # ASFLAGS         := # Assembly Flags
 # CFLAGS          := # C Flags
-# CXXFLAGS        := # C++ Flags
+CXXFLAGS        += -Wall -pedantic -std=c++11 -g
 # LDFLAGS         := # Linker flags
 
 # Documentation
@@ -59,3 +59,4 @@
 # 'include conf/makeball.mk' for pre-configured options
 # to use the library 'makeball'
 
+include conf/pthread.mk
