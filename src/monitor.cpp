@@ -2,22 +2,22 @@
 
 void Monitor::signal()
 {
-  cv.notify_one();
+    cv.notify_one();
 }
 
 void Monitor::wait(unique_lock<mutex> &lck)
 {
-  cv.wait(lck);
+    cv.wait(lck);
 }
 
 void Monitor::devolveGarfo()
 {
-  unique_lock<mutex> lck(m);
-  this->signal();
+    unique_lock<mutex> lck(m);
+    this->signal();
 }
 
 void Monitor::requisitaGarfo()
 {
-  unique_lock<mutex> lck(m);
-  this->wait(lck);
+    unique_lock<mutex> lck(m);
+    this->wait(lck);
 }
