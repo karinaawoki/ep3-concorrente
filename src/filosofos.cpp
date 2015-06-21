@@ -62,6 +62,7 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
       garfo[0].requisitaGarfo(0);
       garfo[num].requisitaGarfo(num);
       //filósofo comendo
+      if(DEBUG) printf("come %d\n", num);
       garfo[0].devolveGarfo(0);
       garfo[num].devolveGarfo(num);
     }
@@ -73,9 +74,11 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
       garfo[num].requisitaGarfo(num);
       garfo[num+1].requisitaGarfo(num+1);
       //filósofo comendo
+      if(DEBUG) printf("come %d\n", num);
       garfo[num].devolveGarfo(num);
       garfo[num+1].devolveGarfo(num+1);
     }
+    if(DEBUG) printf("pensa %d\n", num);
     
     quantidade_comeu[num] ++;
   }
