@@ -1,7 +1,7 @@
 #define SHARED 1
 #define DEBUG 1
-#include<thread>
-#include<atomic>
+#include <thread>
+#include <atomic>
 
 #include "monitor.hpp"
 
@@ -24,7 +24,6 @@ vector<Monitor> garfo;
 
 int main(int argc, char *argv[])
 {
-  
   read(argv[1]);
   R = atoi(argv[2]);
   vector<int> thread_args;
@@ -32,7 +31,6 @@ int main(int argc, char *argv[])
   /* Inicializando vetores / semáforo / barreira */
   //thread_args.resize(N);
   //threads.resize(N);
-  peso.resize(N);
   quantidade_comeu.resize(N);
   //garfo = (Monitor*)malloc(N*sizeof(Monitor));
     
@@ -40,9 +38,9 @@ int main(int argc, char *argv[])
 
     /* Cria threads - filósofos */
   for(int i = 0; i < N; i++)
-    {
-      threads.push_back(thread(filosofoUniforme,garfos,i));
-    }
+  {
+    threads.push_back(thread(filosofoUniforme,garfos,i));
+  }
   for(int i = 0; i < N; i++) threads[i].join();
 
   return 0;
@@ -54,49 +52,34 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
 {
 
   while(R>0)
-    {    
-      printf("oiee\n");
-      /* Último filósofo - diferente dos outros */
-      if(num == N-1)
-        {
-	  garfo[0].requisitaGarfo();
-	  garfo[num].requisitaGarfo();
-	  //filósofo comendo
-	  garfo[0].devolveGarfo();
-	  garfo[num].devolveGarfo();
-	  
-        if(DEBUG) printf("entrou na thread \n");
-        /* Último filósofo - diferente dos outros */
-        if(num == N-1)
-        {
-            if(DEBUG) printf(" método1\n");
-            garfo[0].requisitaGarfo();
-            printf("lalalala\n");
-            garfo[num].requisitaGarfo();
-            //filósofo comendo
-            garfo[0].devolveGarfo();
-            garfo[num].devolveGarfo();
-        }
-        
-      // Demais filósofos
-      else
-        {
-	  garfo[num].requisitaGarfo();
-	  garfo[num+1].requisitaGarfo();
-	  //filósofo comendo
-	  garfo[num].devolveGarfo();
-	  garfo[num+1].devolveGarfo();
-            if(DEBUG) printf(" método2\n");
-            garfo[num].requisitaGarfo();
-            garfo[num+1].requisitaGarfo();
-            //filósofo comendo
-            garfo[num].devolveGarfo();
-            garfo[num+1].devolveGarfo();
-        }
-
-      R--;
-
+  {    
+    /* Último filósofo - diferente dos outros */
+  
+    if(DEBUG) printf("entrou na thread \n");
+    /* Último filósofo - diferente dos outros */
+    if(num == N-1)
+    {
+      if(DEBUG) printf(" método1\n");
+      garfo[0].requisitaGarfo();
+      garfo[num].requisitaGarfo();
+      //filósofo comendo
+      garfo[0].devolveGarfo();
+      garfo[num].devolveGarfo();
     }
+
+    // Demais filósofos
+    else
+    {
+      if(DEBUG) printf(" método2\n");
+      garfo[num].requisitaGarfo();
+      garfo[num+1].requisitaGarfo();
+      //filósofo comendo
+      garfo[num].devolveGarfo();
+      garfo[num+1].devolveGarfo();
+    }
+    R--;
+
+  }
   return 0;
 }
 
