@@ -1,18 +1,15 @@
+#include "monitor.hpp"
 
+using namespace std;
 
-
-typedef class monitor
-{
-	condition_variable cv;
-
-	void signal(condition_variable cv)
+	void Monitor: signal(std:: condition_variable cv)
 	{
 		sem_wait(&m);
 		cv.notify_one();
 		sem_post(&m);
 	}
 
-	void wait(condition_variable cv)
+	void Monitor: wait(std:: condition_variable cv)
 	{
 		sem_wait(&m);
 		cv.wait();
@@ -21,13 +18,12 @@ typedef class monitor
 
 
 
-	void devolveGarfo()
+	void Monitor: devolveGarfo()
 	{
 		signal(cv);
 	}
 
-	void requisitaGarfo()
+	void Monitor: requisitaGarfo()
 	{
 		wait(cv);
 	}
-}Monitor;
