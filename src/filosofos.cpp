@@ -1,4 +1,5 @@
 #define SHARED 1
+#define DEBUG 1
 #include<thread>
 #include<atomic>
 
@@ -37,8 +38,7 @@ int main(int argc, char *argv[])
     
   for(int i = 0; i < N; i++) garfo.emplace_back();
 
-
-  /* Cria threads - filósofos */
+    /* Cria threads - filósofos */
   for(int i = 0; i < N; i++)
     {
       threads.push_back(thread(filosofoUniforme,garfos,i));
@@ -64,6 +64,18 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
 	  //filósofo comendo
 	  garfo[0].devolveGarfo();
 	  garfo[num].devolveGarfo();
+	  
+        if(DEBUG) printf("entrou na thread \n");
+        /* Último filósofo - diferente dos outros */
+        if(num == N-1)
+        {
+            if(DEBUG) printf(" método1\n");
+            garfo[0].requisitaGarfo();
+            printf("lalalala\n");
+            garfo[num].requisitaGarfo();
+            //filósofo comendo
+            garfo[0].devolveGarfo();
+            garfo[num].devolveGarfo();
         }
         
       // Demais filósofos
@@ -74,6 +86,12 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
 	  //filósofo comendo
 	  garfo[num].devolveGarfo();
 	  garfo[num+1].devolveGarfo();
+            if(DEBUG) printf(" método2\n");
+            garfo[num].requisitaGarfo();
+            garfo[num+1].requisitaGarfo();
+            //filósofo comendo
+            garfo[num].devolveGarfo();
+            garfo[num+1].devolveGarfo();
         }
 
       R--;

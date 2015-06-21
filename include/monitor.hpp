@@ -4,13 +4,15 @@
 #include <thread>
 #include <vector>
 #include <mutex>
+#include <string.h>
 
 using namespace std;
 
 class Monitor
-{
+{	
     condition_variable cv;
     mutex m;
+    //unique_lock<mutex> lck(m);
 
     void signal();
 
