@@ -21,7 +21,6 @@ atomic<int> R;
 
 int main(int argc, char *argv[])
 {
-  
   read(argv[1]);
   R = atoi(argv[2]);
   vector<int> thread_args;
@@ -29,7 +28,6 @@ int main(int argc, char *argv[])
   /* Inicializando vetores / semáforo / barreira */
   //thread_args.resize(N);
   //threads.resize(N);
-  peso.resize(N);
   quantidade_comeu.resize(N);
   vector<Monitor> garfos(N);
     
@@ -39,6 +37,7 @@ int main(int argc, char *argv[])
     {
       threads.emplace_back(filosofoUniforme,ref(garfos),ref(i));
     }
+  
   for(int i = 0; i < N; i++) threads[i].join();
 
   return 0;
@@ -50,6 +49,7 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
 {
 
   while(R>0)
+<<<<<<< HEAD
     {    
       printf("oiee\n");
       /* Último filósofo - diferente dos outros */
