@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
 void *filosofoUniforme(vector<Monitor>& garfo,int num)
 {
 
+
   while(quantidade_comeu[num] < comida_por_filosofo[num])
   {          
     if(DEBUG) printf("entrou na thread %d\n", num);
