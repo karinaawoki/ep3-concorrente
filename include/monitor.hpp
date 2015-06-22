@@ -18,29 +18,24 @@ class Monitor
 
     void signal()
     {
-		  this->cv.notify_one();
-		};
+      cv.notify_one();
+    };
 
     void wait(unique_lock<mutex>&lck)
     {
- 		 	this->cv.wait(lck);
-		};
+      cv.wait(lck);
+    };
     
   public:
 
-    Monitor()
-    {
-      quantosEsperam = 0;
-    };
+  Monitor(): quantosEsperam(0){};
 
     void devolveGarfo(int garfo, int proc)
     {
       if(DEBUG) printf("devolveGarfo - entra g:%d p:%d\n", garfo, proc);
-		  
-		  unique_lock<mutex> lck(m);
-      this->signal();
-		  this->quantosEsperam--;
-      
+      unique_lock<mutex> lck(m);
+      signal();
+      quantosEsperam--;
       if(DEBUG) printf("devolveGarfo - saída g:%d p:%d\n", garfo, proc);
     };
 
@@ -51,7 +46,7 @@ class Monitor
       if(DEBUG) printf("requisitaGarfo - entra g:%d p:%d\n", garfo, proc);
       if(quantosEsperam > 0)
       {
-        this->wait(lck);
+        wait(lck);
       }
       quantosEsperam++;
       if(DEBUG) printf("requisitaGarfo - saída g:%d p:%d\n", garfo, proc);
