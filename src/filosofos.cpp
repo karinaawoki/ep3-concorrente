@@ -42,6 +42,12 @@ int main(int argc, char *argv[])
   
   for(int i = 0; i < N; i++) threads[i].join();
 
+  printf("\n\n\n");
+  for (int i = 0; i < N; ++i)
+  {
+    printf("%d  -> %d\n", i, quantidade_comeu[i]);
+  }
+
   return 0;
 }
 
@@ -49,8 +55,6 @@ int main(int argc, char *argv[])
 
 void *filosofoUniforme(vector<Monitor>& garfo,int num)
 {
-
-
   while(quantidade_comeu[num] < comida_por_filosofo[num])
   {          
     if(DEBUG) printf("entrou na thread %d\n", num);
@@ -59,24 +63,24 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
     if(num == N-1)
     {
       if(DEBUG) printf(" método1\n");
-      garfo[0].requisitaGarfo(0);
-      garfo[num].requisitaGarfo(num);
+      garfo[0].requisitaGarfo(0, num);
+      garfo[num].requisitaGarfo(num, num);
       //filósofo comendo
       if(DEBUG) printf("come %d\n", num);
-      garfo[0].devolveGarfo(0);
-      garfo[num].devolveGarfo(num);
+      garfo[0].devolveGarfo(0, num);
+      garfo[num].devolveGarfo(num, num);
     }
         
     // Demais filósofos
     else
     {
       if(DEBUG) printf(" método2\n");
-      garfo[num].requisitaGarfo(num);
-      garfo[num+1].requisitaGarfo(num+1);
+      garfo[num].requisitaGarfo(num, num);
+      garfo[num+1].requisitaGarfo(num+1, num);
       //filósofo comendo
       if(DEBUG) printf("come %d\n", num);
-      garfo[num].devolveGarfo(num);
-      garfo[num+1].devolveGarfo(num+1);
+      garfo[num].devolveGarfo(num, num);
+      garfo[num+1].devolveGarfo(num+1, num);
     }
     if(DEBUG) printf("pensa %d\n", num);
     
