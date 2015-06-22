@@ -1,0 +1,22 @@
+Nomes: Karina Suemi Awoki        nºUSP: 7572102 
+       Mateus Barros Rodrigues          7991037
+       
+ 
+----------------------------------------  
+ -------------------------------------- 
+ TERCEIRO EP DE PROGRAMAÇÃO CONCORRENTE
+ --------------------------------------
+----------------------------------------
+
+* Para -compilar- o arquivo basta digitar 
+     $ make 
+  na pasta raiz (ep3-karina-mateus/).
+----------------------------------------
+* Para -executar- o programa basta digitar 
+     $ ./bin/filosofos nome_teste R U|P
+----------------------------------------
+* O programa foi feito em linguagem C++
+----------------------------------------
+* O código está na pasta src/ e o código
+  do monitor está na pasta include/
+----------------------------------------
