@@ -33,3 +33,4 @@ void Monitor::requisitaGarfo(int apaga)
   this->quantosEsperam++;
   if(DEBUG) printf("requisitaGarfo - saída %d\n", apaga);
 }
+=======
