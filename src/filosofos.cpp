@@ -77,13 +77,13 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
       garfo[0].requisitaGarfo(0, num);
       garfo[num].requisitaGarfo(num, num);
       clock_t begin = clock();
-      printf("Filósofo-%d pegou os dois garfos :D   tempo:%LF\n", num, (long double)(begin));
+      printf("Filósofo-%d pegou os dois garfos :D   tempo:%LF seg\n", num, (long double)begin/CLOCKS_PER_SEC);
       //filósofo comendo
       if(DEBUG) printf("come %d\n", num);
       garfo[0].devolveGarfo(0, num);
       garfo[num].devolveGarfo(num, num);
       clock_t end = clock();
-      printf("Filósofo-%d terminou de comer    :D   tempo:%LF\n", num, (long double)(end));
+      printf("Filósofo-%d terminou de comer    :D   tempo:%LF seg\n", num, (long double)end/CLOCKS_PER_SEC);
     }
         
     // Demais filósofos
@@ -93,13 +93,13 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
       garfo[num].requisitaGarfo(num, num);
       garfo[num+1].requisitaGarfo(num+1, num);
       clock_t begin = clock();
-      printf("Filósofo-%d pegou os dois garfos :D   tempo:%LF\n", num, (long double)(begin));
+      printf("Filósofo-%d pegou os dois garfos :D   tempo:%LF seg\n", num, (long double)begin/CLOCKS_PER_SEC);
       //filósofo comendo
       if(DEBUG) printf("come %d\n", num);
       garfo[num].devolveGarfo(num, num);
       garfo[num+1].devolveGarfo(num+1, num);
       clock_t end = clock();
-      printf("Filósofo-%d terminou de comer    :D   tempo:%LF\n", num, (long double)(end));
+      printf("Filósofo-%d terminou de comer    :D   tempo:%LF seg\n", num, (long double)end/CLOCKS_PER_SEC);
     }
     if(DEBUG) printf("pensa %d\n", num);
     pensa();
