@@ -1,6 +1,6 @@
 #ifndef MONITOR_HPP
 #define MONITOR_HPP
-#define DEBUG 1
+#define DEBUG 0
 
 #include <condition_variable>
 #include <thread>
@@ -11,44 +11,50 @@
 using namespace std;
 
 class Monitor
-{	
+{  
     int quantosEsperam;
     condition_variable cv;
     mutex m;
 
-    void signal();
+    void signal()
+    {
+		  this->cv.notify_one();
+		};
 
-    void wait(unique_lock<mutex>&);
+    void wait(unique_lock<mutex>&lck)
+    {
+ 		 	this->cv.wait(lck);
+		};
     
   public:
 
-  	Monitor()
-  	{
-  		quantosEsperam = 0;
-		};
-
-    void devolveGarfo(int apaga)
+    Monitor()
     {
-    	if(DEBUG) printf("devolveGarfo - entra %d\n", apaga);
-			this->quantosEsperam--;
+      quantosEsperam = 0;
+    };
+
+    void devolveGarfo(int garfo, int proc)
+    {
+      if(DEBUG) printf("devolveGarfo - entra g:%d p:%d\n", garfo, proc);
+		  
 		  unique_lock<mutex> lck(m);
-		  this->signal();
-    	if(DEBUG) printf("devolveGarfo - saída %d\n", apaga);
-		};
+      this->signal();
+		  this->quantosEsperam--;
+      
+      if(DEBUG) printf("devolveGarfo - saída g:%d p:%d\n", garfo, proc);
+    };
 
-    void requisitaGarfo(int apaga)
+    void requisitaGarfo(int garfo, int proc)
     {
-    	if(DEBUG) printf("requisitaGarfo - entra %d\n", apaga);
-			while(quantosEsperam > 0)
-			{
-				printf("  1\n");
-		    unique_lock<mutex> lck(m);
-				printf("  2\n");
-		    this->wait(lck);
-				printf("  3\n");
-			}
-			quantosEsperam++;
-    	if(DEBUG) printf("requisitaGarfo - saída %d\n", apaga);
-		};
+      unique_lock<mutex> lck(m);
+
+      if(DEBUG) printf("requisitaGarfo - entra g:%d p:%d\n", garfo, proc);
+      if(quantosEsperam > 0)
+      {
+        this->wait(lck);
+      }
+      quantosEsperam++;
+      if(DEBUG) printf("requisitaGarfo - saída g:%d p:%d\n", garfo, proc);
+    };
 };
 #endif
