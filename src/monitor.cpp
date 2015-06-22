@@ -13,8 +13,8 @@ void Monitor::wait(unique_lock<mutex> &lck)
 void Monitor::devolveGarfo(int apaga)
 { 
     if(DEBUG) printf("devolveGarfo - entra %d\n", apaga);
-    this->quantosEsperam--;
     this->signal();
+    this->quantosEsperam--;
     if(DEBUG) printf("devolveGarfo - saída %d\n", apaga);
 }
 
@@ -22,7 +22,7 @@ void Monitor::requisitaGarfo(int apaga)
 {
   
   if(DEBUG) printf("requisitaGarfo - entra %d\n", apaga);
-  while(this->quantosEsperam > 0)
+  if(this->quantosEsperam > 0)
     {
       printf("  1\n");
       unique_lock<mutex> lck(m);
