@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
   printf("\n\n\n");
   for (int i = 0; i < N; ++i)
   {
-    printf("%d  -> %d\n", i, quantidade_comeu[i]);
+    printf("Filósofo-%d comeu %d Refeições!\n", i, quantidade_comeu[i]);
   }
 
   return 0;
