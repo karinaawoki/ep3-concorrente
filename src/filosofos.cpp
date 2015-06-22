@@ -77,6 +77,7 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
       if(DEBUG) printf("come %d\n", num);
       garfo[0].devolveGarfo(0, num);
       garfo[num].devolveGarfo(num, num);
+      printf("Filósofo-%d terminou de comer :D\n", num);
     }
         
     // Demais filósofos
@@ -90,6 +91,7 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
       if(DEBUG) printf("come %d\n", num);
       garfo[num].devolveGarfo(num, num);
       garfo[num+1].devolveGarfo(num+1, num);
+      printf("Filósofo-%d terminou de comer :D\n", num);
     }
     if(DEBUG) printf("pensa %d\n", num);
     
