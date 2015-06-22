@@ -12,49 +12,20 @@ using namespace std;
 
 class Monitor
 {  
-    int quantosEsperam;
-    condition_variable cv;
-    mutex m;
+  int quantosEsperam;
+  condition_variable cond;
+  mutex m;
 
-    void signal()
-    {
-		  this->cv.notify_one();
-		};
+  void signal(condition_variable&);
 
-    void wait(unique_lock<mutex>&lck)
-    {
- 		 	this->cv.wait(lck);
-		};
+  void wait(unique_lock<mutex>&,condition_variable&);
     
   public:
 
-    Monitor()
-    {
-      quantosEsperam = 0;
-    };
+  Monitor():quantosEsperam(0){};
 
-    void devolveGarfo(int garfo, int proc)
-    {
-      if(DEBUG) printf("devolveGarfo - entra g:%d p:%d\n", garfo, proc);
-		  
-		  unique_lock<mutex> lck(m);
-      this->signal();
-		  this->quantosEsperam--;
-      
-      if(DEBUG) printf("devolveGarfo - saída g:%d p:%d\n", garfo, proc);
-    };
+  void devolveGarfo(int,int);
 
-    void requisitaGarfo(int garfo, int proc)
-    {
-      unique_lock<mutex> lck(m);
-
-      if(DEBUG) printf("requisitaGarfo - entra g:%d p:%d\n", garfo, proc);
-      if(quantosEsperam > 0)
-      {
-        this->wait(lck);
-      }
-      quantosEsperam++;
-      if(DEBUG) printf("requisitaGarfo - saída g:%d p:%d\n", garfo, proc);
-    };
+  void requisitaGarfo(int,int);
 };
 #endif
