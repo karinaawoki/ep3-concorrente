@@ -8,7 +8,6 @@
 using namespace std;
 
 void *filosofoUniforme(vector<Monitor>&,int);
-void *filosofoPesado(vector<Monitor>&,int);
 void read(char *file_name);
 void distribuiComida();
 
@@ -23,8 +22,16 @@ atomic<int> R;
 int main(int argc, char *argv[])
 {
   read(argv[1]);
+
+
   R = atoi(argv[2]);
   vector<int> thread_args;
+
+  /* Modo uniforme */
+  if(argv[3][0]=='U' || argv[3][0]=='u')
+  {
+    for (int i = 0; i < N; i++)  peso[i] = 1;
+  }
   
   /* Inicializando vetores / semáforo */
   quantidade_comeu.resize(N);
@@ -32,7 +39,6 @@ int main(int argc, char *argv[])
   vector<Monitor> garfos(N);
   
   distribuiComida();
-
 
   /* Cria threads - filósofos */
   for(int i = 0; i < N; i++)
@@ -42,6 +48,7 @@ int main(int argc, char *argv[])
   
   for(int i = 0; i < N; i++) threads[i].join();
 
+  /* Quantidade comida */
   printf("\n\n\n");
   for (int i = 0; i < N; ++i)
   {
@@ -99,7 +106,7 @@ void distribuiComida()
 
   int k = R/somaPesos;
   for (int i = 0; i < N; i++)
-    comida_por_filosofo[i] = k;
+    comida_por_filosofo[i] = k*peso[i];
 
   int resto = R%somaPesos;
   for (int i = 0; i < N && resto>0; i++)
