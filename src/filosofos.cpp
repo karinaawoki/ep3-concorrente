@@ -2,6 +2,9 @@
 #include<thread>
 #include<atomic>
 #include<functional>
+#include<chrono>
+#include<random>
+#include<ctime>
 
 #include "monitor.hpp"
 
@@ -10,6 +13,7 @@ using namespace std;
 void *filosofoUniforme(vector<Monitor>&,int);
 void read(char *file_name);
 void distribuiComida();
+void pensa();
 
 vector<int> quantidade_comeu;
 vector<int> peso;
@@ -84,12 +88,15 @@ void *filosofoUniforme(vector<Monitor>& garfo,int num)
       if(DEBUG) printf(" método2\n");
       garfo[num].requisitaGarfo(num, num);
       garfo[num+1].requisitaGarfo(num+1, num);
+      clock_t begin = clock();
       //filósofo comendo
       if(DEBUG) printf("come %d\n", num);
       garfo[num].devolveGarfo(num, num);
       garfo[num+1].devolveGarfo(num+1, num);
+      clock_t end = clock();
     }
     if(DEBUG) printf("pensa %d\n", num);
+    pensa();
     
     quantidade_comeu[num] ++;
   }
@@ -122,6 +129,13 @@ void distribuiComida()
       resto = 0;
     }
   }
+}
+
+void pensa(){
+  std::mt19937_64 eng;
+  std::uniform_int_distribution<> dist(10, 20);
+  auto time = std::chrono::milliseconds{dist(eng)};
+  std::this_thread::sleep_for(time);
 }
 
 
